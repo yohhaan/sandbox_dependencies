@@ -1,3 +1,9 @@
-deb/
-topics/
-utils/
+deb/*
+!deb/.gitkeep
+
+topics_web/*
+!topics_web/model.tflite
+!topics_web/override_list.pb.gz
+
+utils/*
+!utils/.gitkeep

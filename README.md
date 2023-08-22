@@ -1,56 +1,67 @@
 # sandbox_dependencies
 
-A repo with different dependencies for research on the Privacy Sandbox.
+This repository contains different scripts to fetch several dependencies that
+are useful to analyze the Privacy Sandbox.
 
-## Install
+- [sandbox\_dependencies](#sandbox_dependencies)
+- [Standalone Installation](#standalone-installation)
+  - [Software Requirements](#software-requirements)
+- [Description of Sandbox Dependencies](#description-of-sandbox-dependencies)
+  - [Google Chrome Beta](#google-chrome-beta)
+  - [Topics for the Web](#topics-for-the-web)
+  - [Utils](#utils)
 
-Most likely, this git project should be cloned as a submodule of another
-project.
+# Standalone Installation
 
-Use the provided `DockerFile` under `.devcontainer` (for easy integration with
-[VS code](https://code.visualstudio.com/docs/devcontainers/containers)) to get
-an environment with the necessary software dependencies.
+Although, we provide next the instructions to install this repository on its
+own, in practice, we clone it as a submodule in our projects (see
+[here](https://github.com/yohhaan/topics_analysis) for instance).
 
-Different shell scripts are provided to fetch several Privacy Sandbox's
-dependencies as well as other useful things.
+## Software Requirements
 
-- Preliminary: copy manually: `model.tflite`, `override_list.pb.gz` `top-1m.csv`
-`tranco_ID.csv` into a folder named `topics` at the root of the repository for
-dependencies. These files are available here:
-https://drive.google.com/drive/folders/1qmcVRAskIYdPLVGiD1CmPIPJK78SjL5B?usp=sharing
-- To fetch all: `./fetch_all.sh`
-- To download the latest `google-chrome-beta_current.deb` package:
-  `./fetch_latest_beta_deb.sh`
-- To get Topics dependencies (see preliminary): `./fetch_topics_dependencies.sh`
-- To download utils: `./fetch_utils.sh`
+A `Dockerfile` is provided under `.devcontainer/` (for direct integration with
+[VS Code](https://gist.github.com/yohhaan/b492e165b77a84d9f8299038d21ae2c9)). To
+manually build the image and deploy the Docker container, follow the
+instructions below:
 
-## Topics
+**Requirement:** [Docker](https://www.docker.com/products/docker-desktop)
 
-* `model.tflite` See `chrome://topics-internals` for path with Privacy Sandbox
-  enabled
-* `override_list.pb.gz` Same as above
-* `Taxonomy`
-  https://raw.githubusercontent.com/patcg-individual-drafts/topics/main/taxonomy_v1.md
-* `page_topics_override_list.proto` Downloaded from chromium src code under BSD LICENSE.
-  https://raw.githubusercontent.com/chromium/chromium/main/components/optimization_guide/proto/page_topics_override_list.proto
+1. Build the Docker image:
+```sh
+docker build -t sandbox_dependencies .devcontainer/
+```
+2. Deploy a Docker container:
+```sh
+docker run --rm -it -v ${PWD}:/workspaces/sandbox_dependencies \
+    -w /workspaces/sandbox_dependencies \
+    --entrypoint bash sandbox_dependencies:latest
+```
 
-For now need to copy manually: `model.tflite`, `override_list.pb.gz` `top-1m.csv`
-`tranco_ID.csv` into a folder named `topics` at the root of the repository for
-dependencies.
-These files are available here: https://drive.google.com/drive/folders/1qmcVRAskIYdPLVGiD1CmPIPJK78SjL5B?usp=sharing
+# Description of Sandbox Dependencies
+
+## Google Chrome Beta
+
+`./fetch_latest_beta_deb.sh` downloads the latest
+`google-chrome-beta_current.deb` package in the `deb/` folder.
+
+## Topics for the Web
+
+We provide `model.tflite` and `override_list.pb.gz`. They normally need to be
+manually extracted from their installation path after installing Google Chrome
+Beta and enabling the Privacy Sandbox APIs (the Chrome setting page
+`chrome://topics-internals` displays where these 2 files are saved).
+
+Run `./fetch_topics_web.sh`, to get the dependencies for our analysis of Topics
+for the Web under the `topics_web` folder.
 
 ## Utils
 
-Download several things that could be useful.
+Run `./fetch_utils.sh` to get the following resources under the `utils` folder:
 
-* [GNU Collaborative International Dictionary of
-  English](https://gcide.gnu.org.ua/download )
-  >GNU CIDE is free dictionary; you can redistribute it and/or modify it under
-  >the terms of the GNU General Public License as published by the Free Software
-  >Foundation; either version 3 of the License, or (at your option) any later
-  >version.
+- [GNU Collaborative International Dictionary of
+  English](https://gcide.gnu.org.ua/download)
 
-* [Wordnet](https://wordnet.princeton.edu/)
+- [Wordnet](https://wordnet.princeton.edu/)
 
 - [Word2Vec](https://code.google.com/archive/p/word2vec/)
 

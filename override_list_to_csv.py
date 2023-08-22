@@ -1,6 +1,6 @@
 import sys
 
-import topics.page_topics_override_list_pb2 as page_topics_override_list_pb2
+import topics_web.page_topics_override_list_pb2 as page_topics_override_list_pb2
 
 
 if len(sys.argv) != 2:

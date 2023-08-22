@@ -1,5 +1,5 @@
 {
-    "name": "dependencies",
+    "name": "sandbox_dependencies",
     "dockerFile": "Dockerfile",
     "postCreateCommand": "",
     "customizations": {
