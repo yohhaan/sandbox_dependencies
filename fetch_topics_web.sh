@@ -17,7 +17,7 @@ fi
 proto_path=$output_folder/page_topics_override_list.proto
 if [ ! -f $proto_path ]
 then
-    wget -q -O $proto_path https://raw.githubusercontent.com/chromium/chromium/main/components/optimization_guide/proto/page_topics_override_list.proto
+    wget -q -O $proto_path https://raw.githubusercontent.com/chromium/chromium/8ba1bad80dc22235693a0dd41fe55c0fd2dbdabd/components/optimization_guide/proto/page_topics_override_list.proto #https://raw.githubusercontent.com/chromium/chromium/main/components/optimization_guide/proto/page_topics_override_list.proto
     protoc $proto_path --python_out=.
 fi
 
@@ -36,7 +36,7 @@ taxo_path_md=$taxo_path.md
 taxo_path_pickle=$taxo_path.pickle
 if [ ! -f $taxo_path_pickle ]
 then
-    wget -q -O $taxo_path_md https://raw.githubusercontent.com/patcg-individual-drafts/topics/main/taxonomy_v1.md
+    wget -q -O $taxo_path_md https://raw.githubusercontent.com/patcg-individual-drafts/topics/24c87897e32974c1328b74438feb97bf2ec43375/taxonomy_v1.md #https://raw.githubusercontent.com/patcg-individual-drafts/topics/main/taxonomy_v1.md
     python3 parse_taxonomy_md.py $taxo_path_md $taxo_path_pickle #eventually switch to csv and import with pandas
 fi
 
@@ -45,7 +45,7 @@ crux_path=$output_folder/crux.csv.gz
 crux_csv_path=$output_folder/crux.csv
 if [ ! -f $crux_csv_path ]
 then
-    wget -q -O $crux_path https://raw.githubusercontent.com/zakird/crux-top-lists/main/data/global/current.csv.gz
+    wget -q -O $crux_path https://github.com/zakird/crux-top-lists/raw/main/data/global/202212.csv.gz #https://github.com/zakird/crux-top-lists/raw/main/data/global/current.csv.gz
     gzip -cdk $crux_path > $crux_csv_path
     rm $crux_path
 fi
@@ -56,8 +56,10 @@ tranco_1m_path_zip=$tranco_1m_path.zip
 tranco_id_path=$output_folder/top-1m.id
 if [ ! -f $tranco_1m_path ]
 then
-    wget -q -O $tranco_1m_path_zip https://tranco-list.eu/top-1m.csv.zip
-    wget -q -O $tranco_id_path https://tranco-list.eu/top-1m-id
-    unzip -d $output_folder $tranco_1m_path_zip
-    rm $tranco_1m_path_zip
+    wget -q -O $tranco_1m_path https://tranco-list.eu/download/6JZJX/1000000
+    echo "6JZJX" > $tranco_id_path
+    # wget -q -O $tranco_1m_path_zip https://tranco-list.eu/top-1m.csv.zip
+    # wget -q -O $tranco_id_path https://tranco-list.eu/top-1m-id
+    # unzip -d $output_folder $tranco_1m_path_zip
+    # rm $tranco_1m_path_zip
 fi
